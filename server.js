@@ -38,7 +38,7 @@ app.post('/', async (req, res) => {
 
     const result = schemaCreateTask.validate(req.body);
     if (result.error) {
-        res.status(500).send({ error: result.error.details[0].message });
+        res.status(401).send({ error: result.error.details[0].message });
     }
 
     const createdTask = await Task.create(req.body)

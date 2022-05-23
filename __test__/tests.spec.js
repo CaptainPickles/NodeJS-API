@@ -32,3 +32,10 @@ it("Should test get GET (/)", async () => {
     expect(result.body[0]).toHaveProperty("faite", TaskSeeded.faite)
     expect(result.body.length).toBe(1)
 })
+// todo see in db if correct
+it("Should test post (/)", async () => {
+    const taskToCreate = { description: "test created by post", faite: false }
+    const result = await request(app).post('/').send({ description: "test created by post", faite: false }).expect(200);
+    await request(app).post('/').send({ description: "test created by post" }).expect(401);
+    expect(result.body).toMatchObject(taskToCreate)
+})
