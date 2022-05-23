@@ -1,0 +1,23 @@
+{
+  "name": "controle-node-2.0",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CaptainPickles/NodeJS-API.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CaptainPickles/NodeJS-API/issues"
+  },
+  "homepage": "https://github.com/CaptainPickles/NodeJS-API#readme"
+}
