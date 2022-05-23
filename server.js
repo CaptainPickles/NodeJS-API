@@ -46,12 +46,17 @@ app.post('/', async (req, res) => {
     const createdTask = await Task.create(data)
     res.send(createdTask);
 });
-app.put('/', (req, res) => {
+app.put('/', async (req, res) => {
     res.send('ici traiter PUT')
 })
 
-app.delete('/', (req, res) => {
-    res.send('ici traiter DELETE')
+app.delete('/', async (req, res) => {
+    const id = req.body.id
+    if (!id) res.status(400).send('id  no set in body')
+    if (!mongoose.Types.ObjectId.isValid(String(id))) res.status(400).send('id not correct format')
+
+    const deletedTask = await Task.deleteOne({ _id: String(id) });
+    res.send(deletedTask)
 })
 
 
