@@ -35,19 +35,35 @@ app.post('/', async (req, res) => {
         description: Joi.string().min(2).max(50).required(),
         faite: Joi.boolean().required(),
     });
-    let data
-    try {
-        data = await schemaCreateTask.validateAsync(req.body)
-    } catch (err) {
-        res.status(500).send({ error: err.details[0].message });
-    }
-    if (!data) return
 
-    const createdTask = await Task.create(data)
+    const result = schemaCreateTask.validate(req.body);
+    if (result.error) {
+        res.status(500).send({ error: result.error.details[0].message });
+    }
+
+    const createdTask = await Task.create(req.body)
     res.send(createdTask);
 });
-app.put('/', async (req, res) => {
-    res.send('ici traiter PUT')
+// return nbr of row updated
+app.put('/:id', async (req, res) => {
+    const id = req.params.id
+    if (!id) res.status(400).send('id  no set in params')
+    if (!mongoose.Types.ObjectId.isValid(String(id))) res.status(400).send('id not correct format')
+    const schemaUpdateTask = Joi.object({
+        description: Joi.string().min(2).max(50).required(),
+        faite: Joi.boolean().required(),
+    });
+
+    const result = schemaUpdateTask.validate(req.body);
+    if (result.error) {
+        res.status(500).send({ error: result.error.details[0].message });
+    }
+
+    const task = await Task.findById(req.params.id)
+    if (!task) res.status(401).send("task not found");
+    const resultFromDb = await Task.updateOne({ _id: req.params.id }, task)
+
+    res.send(resultFromDb)
 })
 
 app.delete('/', async (req, res) => {
