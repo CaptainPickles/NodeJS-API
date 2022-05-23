@@ -28,6 +28,21 @@ app.get('/', (req, res) => {
     res.send("Hello World\n");
 });
 
+app.get('/:id', (req, res) => {
+    res.send(req.params.id);
+});
+
+app.post('/', (req, res) => {
+    res.send(req.body);
+});
+app.put('/', (req, res) => {
+    res.send('ici traiter PUT')
+})
+
+app.delete('/', (req, res) => {
+    res.send('ici traiter DELETE')
+})
+
 
 
 
