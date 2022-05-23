@@ -22,8 +22,12 @@ app.get('/', async (req, res) => {
     res.send(tasks);
 });
 
-app.get('/:id', (req, res) => {
-    res.send(req.params.id);
+app.get('/:id', async (req, res) => {
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) res.status(400).send('id not correct format')
+    const task = await Task.findById(req.params.id)
+    if (!task) res.status(401).send("task not found");
+
+    res.send(task);
 });
 
 app.post('/', async (req, res) => {
