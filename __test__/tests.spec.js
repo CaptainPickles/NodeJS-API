@@ -39,3 +39,16 @@ it("Should test post (/)", async () => {
     await request(app).post('/').send({ description: "test created by post" }).expect(401);
     expect(result.body).toMatchObject(taskToCreate)
 })
+
+it("Should test get (/:id)", async () => {
+    // await request(app).get('/?id=dzdzddz').expect(401); //should return 401
+    // const result = await request(app).get(`/?id=${idTaskSeeded}`).expect(200); // should return result.id
+    // expect(result.body).toBe(false)
+    expect(true).toBe(true)
+
+})
+
+// todo
+it("Should test put (/:id)", async () => {
+    expect(true).toBe(true)
+})

@@ -23,7 +23,10 @@ app.get('/', async (req, res) => {
 });
 
 app.get('/:id', async (req, res) => {
-    if (!mongoose.Types.ObjectId.isValid(req.params.id)) res.status(400).send('id not correct format')
+    console.warn(req.params.id)
+    if (!req.params.id) res.status(400).send('id not set')
+    else if (!req.params.id.match(/^[0-9a-fA-F]{24}$/)) res.status(400).send('id not correct format')
+
     const task = await Task.findById(req.params.id)
     if (!task) res.status(401).send("task not found");
 
@@ -39,10 +42,11 @@ app.post('/', async (req, res) => {
     const result = schemaCreateTask.validate(req.body);
     if (result.error) {
         res.status(401).send({ error: result.error.details[0].message });
+    } else {
+        const createdTask = await Task.create(req.body)
+        res.send(createdTask);
     }
 
-    const createdTask = await Task.create(req.body)
-    res.send(createdTask);
 });
 // return nbr of row updated
 app.put('/:id', async (req, res) => {
