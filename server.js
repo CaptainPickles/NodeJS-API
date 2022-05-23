@@ -14,6 +14,13 @@ const schemaJoiTask = Joi.object({
     faite: Joi.boolean(),
 });
 
+const taskSchema = new mongoose.Schema({
+    id: String,
+    description: String,
+    faite: Boolean,
+});
+
+const Task = mongoose.model('Task', taskSchema);
 
 app.use(express.json());
 
